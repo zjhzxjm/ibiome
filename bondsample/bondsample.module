@@ -1,0 +1,55 @@
+<?php
+/**
+ * @file
+ * Support for bond sample
+ */
+
+/**
+ * Implements hook_user_view().
+ */
+function bondsample_user_view($account) {
+  $fields = array();
+  $relationship = array(
+    'A' => '本人',
+    'B' => '女儿',
+    'C' => '儿子',
+    'D' => '父亲',
+    'E' => '母亲',
+    'F' => '其它',
+  );
+
+
+  $form_sids = db_query("SELECT sid FROM {webform_submissions} WHERE uid=:uid AND nid=:nid", array(':uid' => $account->uid, ':nid' => 13));
+  $account->content['samples'] = array(
+    '#type' => 'user_profile_category',
+    '#title' => t('我绑定的样品'),
+  );
+  foreach($form_sids as $row) {
+    $result = db_query("SELECT * FROM {webform_submitted_data} WHERE sid=:sid", array(':sid' => $row->sid));
+    foreach ($result as $field) {
+      if( $field -> cid == 1 ){
+        $rela_data = $field -> data; 
+      }
+      if( $field -> cid == 3 ) {
+        $sampleid_data = "RealOral".$field -> data;
+      }
+      if( $field -> cid == 4 ) {
+        $title_data = "我".$relationship[$rela_data] ."（".$field -> data."）的口腔样品:";
+      }
+    }
+    if($sampleid_data) {
+      $account->content['samples'][$sampleid_data] = array(
+        '#type' => 'user_profile_item',
+        '#title' => $title_data,
+        '#markup' => "样品编号：$sampleid_data<br>检测报告:",
+      );
+    }else{
+      $account->content['samples']['no'] = array(
+        '#type' => 'user_profile_item',
+        '#title' => t('尚未成功绑定'),
+        '#markup' => "",
+      );
+    }
+  }
+
+}
