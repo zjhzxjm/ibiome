@@ -37,13 +37,13 @@ function bondsample_user_view($account) {
           $otherrela_data = $field -> data;
           break;
         case 3:
-          $sampleid_data = "RealOral".$field -> data;
+          $sampleid_data = $field -> data;
           break;
         case 4:
           if( $otherrela_data ){
-            $title_data = "我". $otherrela_data ."（".$field -> data."）的口腔样品:";
+            $title_data = "我". $otherrela_data ."（".$field -> data."）的口腔样品";
           }else{
-            $title_data = "我". $relationship[$rela_data] ."（".$field -> data."）的口腔样品:";
+            $title_data = "我". $relationship[$rela_data] ."（".$field -> data."）的口腔样品";
           }
           break;
       }
@@ -51,7 +51,7 @@ function bondsample_user_view($account) {
     $account->content['samples'][$sampleid_data] = array(
       '#type' => 'user_profile_item',
       '#title' => $title_data,
-      '#markup' => "样品编号：$sampleid_data<br>检测报告:",
+      '#markup' => "样品编号：$sampleid_data<br>检测报告：<a href=?q=checkreport/$sampleid_data/$title_data>$sampleid_data 报告</a>",
     );
   }
   if(!$sampleid_data) {
@@ -62,3 +62,4 @@ function bondsample_user_view($account) {
     );
   }
 }
+
