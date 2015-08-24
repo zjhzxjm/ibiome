@@ -1,0 +1,28 @@
+/**
+ * Your custom CSS.
+ */
+path {  stroke: #fff; }
+path:hover {  opacity:0.9; }
+rect:hover {  fill:blue; }
+.axis {  font: 10px sans-serif; }
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {  display: none; }
+.legend{
+  margin-bottom:76px;
+  border-collapse: collapse;
+  border-spacing: 0px;
+}
+.legend td{
+  padding:4px 5px;
+  vertical-align:bottom;
+}
+.legendFreq, .legendPerc{
+  align:right;
+}

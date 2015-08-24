@@ -1,0 +1,21 @@
+name = DGD 7 Theme
+description = A theme written for xujm
+core = 7.x
+
+; CORE REGIONS - DISABLED
+;regions[highlighted] = Highlighted
+;regions[help] = Help
+;regions[header] = Header
+;regions[footer] = Footer
+
+; CORE REGIONS - REQUIRED
+regions[page_top] = Page Top
+regions[content] = Content
+regions[page_bottom] = Page Bottom
+
+; CORE REGIONS
+regions[sidebar_first] = Sidebar First
+regions[sidebar_second] = Sidebar Second
+
+; CUSTOM REGIONS
+regions[my_custom_region] = My Custom Region
