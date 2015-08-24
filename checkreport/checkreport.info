@@ -1,6 +1,0 @@
-name = checkreport
-description = microbe check report
-core = 7.x
-package = IBIOME
-dependencies[] = d3
-files[] = checkreport.module

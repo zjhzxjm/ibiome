@@ -51,7 +51,9 @@ function bondsample_user_view($account) {
     $account->content['samples'][$sampleid_data] = array(
       '#type' => 'user_profile_item',
       '#title' => $title_data,
-      '#markup' => "<a class=\"ui red tag tiny label\" href=?q=checkreport/$sampleid_data/$title_data>$sampleid_data 报告</a>",
+      '#markup' => "
+        <a class=\"ui red tag tiny label\" href=?q=checkreport/$sampleid_data/$title_data>查看 $sampleid_data 报告</a>
+      ",
     );
   }
   if(!$sampleid_data) {

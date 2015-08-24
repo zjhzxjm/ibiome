@@ -1,0 +1,7 @@
+.tooltip {
+  z-index: 1000;
+}
+#visualization {
+  width:400px;
+  display:inline;
+}

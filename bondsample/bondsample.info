@@ -1,5 +1,0 @@
-name = Bond Sample
-description = 绑定取样管编号
-package = IBIOME
-core = 7.x
-files[] = bondsample.module

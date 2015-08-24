@@ -14,14 +14,13 @@ function menufun_checkreport_content($sample_id = NULL) {
   }
   if(count($arr_pie)){
     $intr_txt_content = "
-      <h4 class=\"ui horizontal divider header\"><i class=\"tag icon\"></i>背景知识介绍</h4>
       <br>
+      <h4 class=\"ui horizontal divider header\"><i class=\"tag icon\"></i>背景知识介绍</h4>
      <p>口腔菌群与很多疾病关系密切[1-2]：口腔溃疡，牙周病，牙髓病，磨损，上颌前突，青少年牙周炎，舌病，唇病，龋齿，唇裂，四环素牙，单纯性牙周炎，口腔念珠菌病， 腭裂等都属于常见的口腔疾病，这些常见的口腔疾病发病率非常高，却往往容易被人们所忽视。
      <br>
      口腔中存在700多种细菌，菌群失调会引起许多种口腔疾病，而牙龈内的神经却不怎么敏感，常常牙周已经病了却还没把疼痛信号传递给大脑。据《第三次全国口腔健康流行病学调查报告》显示，我国全民口腔患病率高达97.6%。
      感觉口腔出问题的时候，往往已是“中晚期”。
      <br>
-
      口腔里既有好益生菌，也有有害菌，当有害菌增多，口腔内微妙的生态平衡被打破的时候，细菌就会沿着缝隙深入破坏，若没干预，会一直侵蚀到牙槽骨,当发展为牙周炎时，缺失的牙槽骨已无处可寻，严重的只能通过手术修复了。近年来的研究显示，口腔疾病与心脏病和中风的发生有着密切关系—牙病也会导致心脑血管病，已成为医学界共识。口腔病原菌还会导致呼吸系统疾病、消化系统疾病、糖尿病和老年痴呆等。
      <br>
      保持口腔健康，早期预防是关键！通过定期口腔微生态健康体检可以对口腔菌群健康进行监测，并对常见口腔疾病龋齿、牙周炎、口腔癌及口臭发生风险进行评估，从而提供预防和保健建议。
@@ -40,15 +39,36 @@ function menufun_checkreport_content($sample_id = NULL) {
     ";
     $chart = array(
       'id' => 'visualization',
-      'type' => 'PieChart',
+      'type' => 'PieBar',
       'rows' => $arr_pie,
     );
-    $pie_content = d3_draw($chart);
+    $color = array('blue', 'red', 'orange', 'green', 'purple', 'lightblue', 'palevioletred', 'orangered', 'mediumpurple', 'pink', 'yellow', 'olive', 'mediumorchid');
+    $ref_abundance = array('0.0261~0.199(0.061)', '0.050~0.309(0.144)', '0.012~0.084(0.025)', '0.041~0.202(0.101)', '0.025~0.157(0.049)');
+    $pie_bar_content = "
+    <div style=\"float:right;width:500px\">
+      <div class=\"ui three item  menu\">
+        <div class=\"item\">细菌名称</div>
+        <div class=\"item\">您的菌群</div>
+        <div class=\"item\">参考区间（平均值）</div>
+      </div>
+    ";
+    for($row=0; $row < count($arr_pie); $row++){
+      $pie_bar_content .= "
+      <div class=\"ui ".$color[$row]." inverted three item menu\">
+      ";
+      for($col=0; $col < count($arr_pie[$row]); $col++){
+        $pie_bar_content .= "
+          <a class=\"item\">".$arr_pie[$row][$col]."</a>
+        ";
+      }
+      $pie_bar_content .= "
+        <a class=\"item\">$ref_abundance[$row]</a>
+      </div>";
+    }
+    $pie_bar_content .= "</div>";
+    $pie_content = d3_draw($chart).$pie_bar_content;
     $pie_txt_content = "
       <h4 class=\"ui horizontal divider header\"><i class=\"pie chart icon\"></i>我的口腔菌组成调查结果</h4>
-      <br>
-      <br>
-      <p><em>分</em>别在门、纲、目、科、属分类等级对各个样品做物种profiling相应的柱状图。</p>
     ";
 
     $dashboard = array(
@@ -68,8 +88,7 @@ function menufun_checkreport_content($sample_id = NULL) {
           'Strategy',
           'Design',
         ),
-        'rows' => array(
-          array('1st Quarter 2011',10,20,26,35),
+        'rows' => array( array('1st Quarter 2011',10,20,26,35),
           array('2nd Quarter 2011',20,26,27,37),
           array('3rd Quarter 2011',10,50,28,50),
           array('4th Quarter 2011',15,76,49,51),
@@ -78,7 +97,6 @@ function menufun_checkreport_content($sample_id = NULL) {
     );
     $line_txt_content = "
       <h4 class=\"ui horizontal divider header\"><i class=\"pie chart icon\"></i>我历次检测口腔菌对比</h4>
-      <br>
     ";
     $line_content = d3_draw($line);
   $content = "$intr_txt_content<br>$pie_txt_content<br>$pie_content<br>$dash_txt_content<br>$dashboard_content<br>$line_txt_content<br>$line_content";

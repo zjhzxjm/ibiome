@@ -13,13 +13,13 @@
 
 (function($) {
 
-  Drupal.d3.piechart = function (select, settings) {
+  Drupal.d3.piebar = function (select, settings) {
     var wedges = settings.rows,
       // Each wedge has a label and a value
       key = wedges.map(function(d) { return String(d[0]); }),
       // Padding is top, right, bottom, left as in css padding.
-      p = [10, 50, 15, 50],
-      w = 900,
+      p = [10, 5, 15, 5],
+      w = 400,
       h = 400,
       // Chart diameter is w or h, (whichever is smaller) - padding.
       radius = Math.min((w - p[1] - p[3]), (h - p[0] - p[2])) / 2,
@@ -83,36 +83,6 @@
         .style("text-anchor", "middle")
         .style('fill', 'white')
         .text(function(d, i) { return percent(i); });
-
-    /* LEGEND */
-    var legend = svg.append("g")
-      .attr("class", "legend")
-      .attr("transform", "translate(" + (radius * 2 + p[3]) + "," + p[0] + ")");
-
-    var keys = legend.selectAll("g")
-      .data(key)
-      .enter().append("g")
-      .attr("transform", function(d,i) { return "translate(0," + d3.tileText(d,15) + ")"});
-
-    keys.append("rect")
-      .attr("fill", function(d,i) { return d3.rgb(color(i)); })
-      .attr("class", function(d,i) {return "color_" + color(i); })
-      .attr("width", 16)
-      .attr("height", 16)
-      .attr("y", 0)
-      .attr("x", 0)
-      .on('mouseover', function(d, i) { interact('over', i); })
-      .on('mouseout', function(d, i) { interact('out', i); });
-
-    var labelWrapper = keys.append("g");
-
-    labelWrapper.selectAll("text")
-      .data(function(d,i) { return d3.splitString(key[i], 15); })
-      .enter().append("text")
-      .text(function(d,i) { return d})
-      .attr("x", 20)
-      .attr("y", function(d,i) { return i * 20})
-      .attr("dy", "1em");
 
     /**
      * Wrapper function for all rollover functions.
